@@ -1,0 +1,31 @@
+START:	bis.b 	#41h,P1DIR
+			bis.b 	#01h,P1OUT
+			bic.b	#40h,P1OUT
+
+			bis.b	#18h,P1REN
+			bis.b	#08h,P1OUT
+
+LOOP:
+			xor.b	#41h,P1OUT
+			mov.b	P1IN,R6
+			bit.b	#08h,R6
+			jc		SC
+			jmp 	LOOP1
+
+LOOP1:
+			bic.b 	#41h,P1OUT
+			mov.b	P1IN,R6
+			bit.b	#08h,R6
+			jc		START
+			jmp 	LOOP1
+SC:
+			mov.w	#49998, R7
+DELAY:
+			mov.w 	#1234h, &200h 			;5c
+			mov.w	R5, R5						;1c
+			mov.w 	#1234h, &200h			;5c
+			sub.w 	#1, R7						;2c
+			jnz		DELAY						;2c
+
+
+			jmp		LOOP
