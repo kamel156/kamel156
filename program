@@ -1,0 +1,25 @@
+#include <msp430.h>
+char stanw;
+long int n;
+
+int main (void) {
+ WDTCTL = WDTP + WDTHOLD;
+ P1DIR |= BIT0 + BIT6;
+ P1REN |= BIT3;
+ P1OUT |= BIT3;
+ 
+ 
+ while (1) {
+ volatile unsignet int i;
+ stanw = P1IN & BIT3;
+  if(stanw == 0){
+      P1OUT  ^= BIT6;
+  } 
+  else {
+    P1OUT ^= BIT0;
+  }
+ i = 50000;
+ do (i--);
+ while (i !=0);
+}
+}
